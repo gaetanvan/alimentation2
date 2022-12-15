@@ -42,14 +42,11 @@ include_once("includes/header.php");
         </section>
         <section class="list">
             <?php
-            for ($i = 0;$i < count($foods["foodName"]); $i++) {
-                echo
+            for ($i = 0;$i < count($foods["foodName"]); $i++) { ?>
                 <div class="food" >
-                <div class="foodName" > Big Mac </div >
-                <div class="foodCalories" > 504 kcal </div >
-            </div >
-            }
-            ?>
+                <div class="foodName" ><?php echo $foods["foodName"][$i]; ?></div >
+                <div class="foodCalories" > <?php echo $foods["foodCalories"][$i]; ?> kcal</div >
+            <?php } ?>
         </section>
         <footer>
             <button>+
