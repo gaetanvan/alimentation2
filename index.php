@@ -21,9 +21,7 @@ if (!$user['isLogged']){
     header('location: login.php');
     exit;
 }
-$page = [
-        "title"=>"Alim-Entation"
-];
+
 include_once("includes/header.php");
 ?>
 <body>
