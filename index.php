@@ -29,10 +29,18 @@ include_once("includes/header.php");
 <body>
     <div class="container">
         <header>
-            <div class="title">Alim-Entation</div>
-            <div class="profil"><?php echo $user['name']; ?></div>
+            <nav>
+                <ul class="nav nav-pills float-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Alim-Entation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><?php echo $user['name']; ?></a>
+                    </li>
+                </ul>
+            </nav>
         </header>
-        <section class="dataUser">
+        <section class="jumbotron center dataUser">
             <div class="graph"></div>
             <div class="imc"><?php echo $user['imc']; ?></div>
             <div class="weight"><?php echo $user['weight']; ?> kg</div>
