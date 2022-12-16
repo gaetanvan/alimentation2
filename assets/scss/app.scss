@@ -4,6 +4,9 @@
 body {
   background: white;
 }
+p {
+  margin-bottom: 0rem;
+}
 .containerApp {
   display: flex;
   flex-direction: column;
@@ -17,4 +20,7 @@ main {
   height: 200px;
   justify-content: center;
   display: flex;
+}
+footer {
+  padding-bottom: 10px;
 }

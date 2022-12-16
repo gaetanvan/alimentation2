@@ -47,7 +47,8 @@ include_once("includes/header.php");
                 </div>
             </section>
             <section class="date">
-                <div class="date text-center"><?php $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL,
+                <div class="date text-center py-3"><?php $formatter = new IntlDateFormatter('fr_FR',
+                        IntlDateFormatter::FULL,
                         IntlDateFormatter::NONE);echo $formatter->format(time()); ?></div>
             </section>
             <section class="list">
@@ -57,8 +58,8 @@ include_once("includes/header.php");
                             <?php
                             for ($i = 0;$i < count($foods->foodName); $i++) { ?>
                                 <div class="food" >
-                                <div class="foodName" ><?php echo $foods->foodName[$i]; ?></div >
-                                <div class="foodCalories" > <?php echo $foods->foodCalories[$i]; ?> kcal</div >
+                                <h3 class="foodName" ><?php echo $foods->foodName[$i]; ?></h3 >
+                                <p class="foodCalories" > <?php echo $foods->foodCalories[$i]; ?> kcal</p >
                                 </div>
                             <?php } ?>
                         </div>
@@ -67,8 +68,9 @@ include_once("includes/header.php");
             </section>
         </main>
         <footer>
-            <button>+
-            </button>
+            <div class="text-center">
+                <button class="btn btn-dark">+</button>
+            </div>
         </footer>
     </div>
     <?php
