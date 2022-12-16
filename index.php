@@ -1,23 +1,15 @@
 <?php
 //Connexion a la BDD
 //Connexion
-//On stock les infos du user
-$user = [
-        "id"=>1,
-        "name"=>"Roger",
-        "age"=> 21,
-        "weight"=> 79,
-        "sex"=>"male",
-        "size"=>173,
-        "imc"=>23.4,
-        "mail"=>"roger@gmail.com",
-        "isLogged"=>true
-];
-$foods = [
-    "foodName"=>array("BigMac","Tomate","Wrap","Pizza","Céréales"),
-    "foodCalories"=>array(504,205,536,864,345),
-];
-if (!$user['isLogged']){
+//On recupere les infos du user
+require 'user.php';
+$user = new User();
+
+//On stock les info food
+require 'food.php';
+$foods = new Food();
+
+if (!$user->isLogged){
     header('location: login.php');
     exit;
 }
@@ -27,35 +19,47 @@ $page = [
 include_once("includes/header.php");
 ?>
 <body>
-    <div class="container">
+    <div class="containerApp">
         <header>
-            <nav>
-                <ul class="nav nav-pills float-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Alim-Entation</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><?php echo $user['name']; ?></a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="container">
+                <div class="row align-items-center">
+                        <div class="col">
+                            <h1>Alim-Entation</h1>
+                        </div>
+                        <div class="col-auto">
+                        <div><i class="bi bi-person"></i> <?php echo $user->name ?></div>
+                        </div>
+                </div>
+            </div>
         </header>
-        <section class="jumbotron center dataUser">
-            <div class="graph"></div>
-            <div class="imc"><?php echo $user['imc']; ?></div>
-            <div class="weight"><?php echo $user['weight']; ?> kg</div>
-        </section>
-        <section class="date">
-            <div class="date"><?php echo date("l M y") ?></div>
-        </section>
-        <section class="list">
-            <?php
-            for ($i = 0;$i < count($foods["foodName"]); $i++) { ?>
-                <div class="food" >
-                <div class="foodName" ><?php echo $foods["foodName"][$i]; ?></div >
-                <div class="foodCalories" > <?php echo $foods["foodCalories"][$i]; ?> kcal</div >
-            <?php } ?>
-        </section>
+        <main>
+            <section class="dataUser align-items-center">
+                <div class="imc col"><?php echo $user->imc; ?></div>
+                <div class="col doughnut">
+                    <canvas id="myChart"></canvas>
+                    <div class="kcal">1200 kcal</div>
+                </div>
+                <div class="weight col"><?php echo $user->weight; ?> kg</div>
+                <div class="custom-shape-divider-bottom-1671193259">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" class="shape-fill"></path>
+                    </svg>
+                </div>
+            </section>
+            <section class="date">
+                <div class="date text-center"><?php $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::LONG,
+                        IntlDateFormatter::NONE);echo $formatter->format(time()); ?></div>
+            </section>
+            <section class="list">
+                <?php
+                for ($i = 0;$i < count($foods->foodName); $i++) { ?>
+                    <div class="food" >
+                    <div class="foodName" ><?php echo $foods->foodName[$i]; ?></div >
+                    <div class="foodCalories" > <?php echo $foods->foodCalories[$i]; ?> kcal</div >
+                    </div>
+                <?php } ?>
+            </section>
+        </main>
         <footer>
             <button>+
             </button>

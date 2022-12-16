@@ -1,6 +1,20 @@
+@import "variables";
+@import "components/header";
+@import "components/datauser";
 body {
-  background: grey;
-  h1{
-    color:pink;
-  }
+  background: white;
+}
+.containerApp {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+main {
+  flex: 1;
+  overflow-y: scroll;
+}
+.doughnut {
+  height: 200px;
+  justify-content: center;
+  display: flex;
 }

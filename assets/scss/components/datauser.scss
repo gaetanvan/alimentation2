@@ -1,0 +1,35 @@
+.dataUser {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  background: linear-gradient(to bottom,$secondary,$primary);
+  padding-bottom: 30px;
+  position: relative;
+
+}
+.doughnut{
+  .kcal{
+    position: absolute;
+    align-self: center;
+    font-size: 1.2rem;
+  }
+}
+.custom-shape-divider-bottom-1671193259 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-bottom-1671193259 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 25px;
+}
+
+.custom-shape-divider-bottom-1671193259 .shape-fill {
+  fill: white;
+}
