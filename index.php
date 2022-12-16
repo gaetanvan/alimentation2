@@ -47,17 +47,23 @@ include_once("includes/header.php");
                 </div>
             </section>
             <section class="date">
-                <div class="date text-center"><?php $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::LONG,
+                <div class="date text-center"><?php $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL,
                         IntlDateFormatter::NONE);echo $formatter->format(time()); ?></div>
             </section>
             <section class="list">
-                <?php
-                for ($i = 0;$i < count($foods->foodName); $i++) { ?>
-                    <div class="food" >
-                    <div class="foodName" ><?php echo $foods->foodName[$i]; ?></div >
-                    <div class="foodCalories" > <?php echo $foods->foodCalories[$i]; ?> kcal</div >
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <?php
+                            for ($i = 0;$i < count($foods->foodName); $i++) { ?>
+                                <div class="food" >
+                                <div class="foodName" ><?php echo $foods->foodName[$i]; ?></div >
+                                <div class="foodCalories" > <?php echo $foods->foodCalories[$i]; ?> kcal</div >
+                                </div>
+                            <?php } ?>
+                        </div>
                     </div>
-                <?php } ?>
+                </div>
             </section>
         </main>
         <footer>
