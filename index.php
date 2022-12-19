@@ -2,11 +2,11 @@
 //Connexion a la BDD
 //Connexion
 //On recupere les infos du user
-require 'user.php';
+require 'class/Autoloader.php';
+Autoloader::register();
 $user = new User();
 
 //On stock les info food
-require 'food.php';
 $foods = new Food();
 
 if (!$user->isLogged){
