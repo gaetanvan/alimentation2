@@ -2,9 +2,28 @@
 //Connexion a la BDD
 //Connexion
 //On recupere les infos du user
-require 'class/Autoloader.php';
+
+use \App\Autoloader;
+use \App\Food;
+use \App\User;
+use \App\Database;
+
+
+require 'app/class/Autoloader.php';
 Autoloader::register();
 $user = new User();
+$db = new Database('alimentation');
+$datas = $db->query('SELECT * from user');
+
+if (isset($_POST['enter'])) {
+    $foodName = $_POST['meal'];
+    $foodWeight = $_POST['kcal'];
+    $foodDate = date('Y-m-d');
+    $userID = 1;
+    $insertFood = $db->prepare('INSERT INTO food (userID, foodName , foodWeight, foodDate) 
+    VALUES (? , ? , ? , ?)', array($userID, $foodName, $foodWeight, $foodDate));
+}
+
 
 //On stock les info food
 $foods = new Food();
@@ -56,12 +75,12 @@ include_once("includes/header.php");
                     <div class="row">
                         <div class="col">
                             <?php
-                            for ($i = 0;$i < count($foods->foodName); $i++) { ?>
+                            foreach ($db->query('SELECT * FROM food') as $foods): ?>
                                 <div class="food" >
-                                <h3 class="foodName" ><?php echo $foods->foodName[$i]; ?></h3 >
-                                <p class="foodCalories" > <?php echo $foods->foodCalories[$i]; ?> kcal</p >
+                                <h3 class="foodName" ><?php echo $foods->foodName; ?></h3 >
+                                <p class="foodCalories" > <?php echo $foods->foodWeight; ?> kcal</p >
                                 </div>
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
@@ -69,10 +88,36 @@ include_once("includes/header.php");
         </main>
         <footer>
             <div class="text-center">
-                <button class="btn btn-dark">+</button>
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Nouveaux repas</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post">
+                                <div class="mb-3">
+                                    <label for="meal" class="form-label">Repas</label>
+                                    <input type="text" name="meal" class="form-control" id="meal">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kcal" class="form-label">Calories</label>
+                                    <input type="text" name="kcal" class="form-control" id="kcal">
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" name='enter' class="btn btn-primary">Enregistrer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
     <?php
-    include_once 'includes/header.php';
+    include_once 'includes/footer.php';
     ?>

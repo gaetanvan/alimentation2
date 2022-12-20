@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/gaetanvan/alimentation2#readme",
   "dependencies": {
-    "@popperjs/core": "^2.11.6"
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3"
   }
 }
