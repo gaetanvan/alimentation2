@@ -2,7 +2,6 @@
 //Connexion a la BDD
 //Connexion
 //On recupere les infos du user
-
 use \App\Autoloader;
 use \App\Food;
 use \App\User;
@@ -14,6 +13,7 @@ Autoloader::register();
 $user = new User();
 $db = new Database('alimentation');
 $datas = $db->query('SELECT * from user');
+$id = array($_GET['id']);
 
 if (isset($_POST['enter'])) {
     $foodName = $_POST['meal'];
@@ -23,11 +23,17 @@ if (isset($_POST['enter'])) {
     $insertFood = $db->prepare('INSERT INTO food (userID, foodName , foodWeight, foodDate) 
     VALUES (? , ? , ? , ?)', array($userID, $foodName, $foodWeight, $foodDate));
 }
-
+$mail = 'roger@gmail.com';
+$db = new PDO('mysql:host=localhost;dbname=animodo', 'root', '');
+$sql = "SELECT * FROM user where mail = '$mail'";
+$result = $db->prepare($sql);
+$result->execute();
+$data = $result->fetch();
+var_dump($data['name']);
 
 //On stock les info food
-$foods = new Food();
-
+$food = $db->prepare('SELECT * FROM food WHERE userID = ?', $id);
+var_dump($food);
 if (!$user->isLogged){
     header('location: login.php');
     exit;
@@ -44,6 +50,7 @@ include_once("includes/header.php");
                 <div class="row align-items-center">
                         <div class="col">
                             <h1>Alim-Entation</h1>
+                            <h1><?php echo $data['name']; ?></h1>
                         </div>
                         <div class="col-auto">
                         <div><i class="bi bi-person"></i> <?php echo $user->name ?></div>
@@ -75,7 +82,7 @@ include_once("includes/header.php");
                     <div class="row">
                         <div class="col">
                             <?php
-                            foreach ($db->query('SELECT * FROM food') as $foods): ?>
+                            foreach ( $food as $foods): ?>
                                 <div class="food" >
                                 <h3 class="foodName" ><?php echo $foods->foodName; ?></h3 >
                                 <p class="foodCalories" > <?php echo $foods->foodWeight; ?> kcal</p >
