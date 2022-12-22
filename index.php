@@ -14,35 +14,33 @@ $user = new User();
 $db = new Database('alimentation');
 $datas = $db->query('SELECT * from user');
 $id = array($_GET['id']);
+$userID = $_GET['id'];
+//$mail = 'roger@gmail.com';
+//On stock les info food
+$foodInfo  = Food::getFood($id);
+$data = User::getInfo($userID);
+
 
 if (isset($_POST['enter'])) {
     $foodName = $_POST['meal'];
     $foodWeight = $_POST['kcal'];
     $foodDate = date('Y-m-d');
-    $userID = 1;
+    $userIDFood = $userID;
     $insertFood = $db->prepare('INSERT INTO food (userID, foodName , foodWeight, foodDate) 
-    VALUES (? , ? , ? , ?)', array($userID, $foodName, $foodWeight, $foodDate));
+    VALUES (? , ? , ? , ?)', array($userIDFood, $foodName, $foodWeight, $foodDate));
+    header('Location:index.php?id='.$userID);
 }
-$mail = 'roger@gmail.com';
-$db = new PDO('mysql:host=localhost;dbname=animodo', 'root', '');
-$sql = "SELECT * FROM user where mail = '$mail'";
-$result = $db->prepare($sql);
-$result->execute();
-$data = $result->fetch();
-var_dump($data['name']);
 
-//On stock les info food
-$food = $db->prepare('SELECT * FROM food WHERE userID = ?', $id);
-var_dump($food);
-if (!$user->isLogged){
-    header('location: login.php');
-    exit;
-}
+//if (!$data['isLogged']){
+//    header('location: login.php');
+//    exit;
+//}
 $page = [
     "title"=>"Alim-Entation"
 ];
 include_once("includes/header.php");
 ?>
+</head>
 <body>
     <div class="containerApp">
         <header>
@@ -50,22 +48,21 @@ include_once("includes/header.php");
                 <div class="row align-items-center">
                         <div class="col">
                             <h1>Alim-Entation</h1>
-                            <h1><?php echo $data['name']; ?></h1>
                         </div>
                         <div class="col-auto">
-                        <div><i class="bi bi-person"></i> <?php echo $user->name ?></div>
+                        <div><i class="bi bi-person"></i> <?php echo $data['name'] ?></div>
                         </div>
                 </div>
             </div>
         </header>
         <main>
             <section class="dataUser align-items-center">
-                <div class="imc col"><?php echo $user->imc; ?></div>
+                <div class="imc col">IMC : <?php echo $data['imc']; ?></div>
                 <div class="col doughnut">
                     <canvas id="myChart"></canvas>
-                    <div class="kcal">1200 kcal</div>
+                    <div class="kcal"><span id="kcal">1200</span> kcal</div>
                 </div>
-                <div class="weight col"><?php echo $user->weight; ?> kg</div>
+                <div class="weight col"><?php echo $data['weight']; ?> kg</div>
                 <div class="custom-shape-divider-bottom-1671193259">
                     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                         <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" class="shape-fill"></path>
@@ -82,10 +79,11 @@ include_once("includes/header.php");
                     <div class="row">
                         <div class="col">
                             <?php
-                            foreach ( $food as $foods): ?>
+                            foreach ( $foodInfo as $foods): ?>
                                 <div class="food" >
-                                <h3 class="foodName" ><?php echo $foods->foodName; ?></h3 >
-                                <p class="foodCalories" > <?php echo $foods->foodWeight; ?> kcal</p >
+                                <h3 class="foodName" ><?php echo $foods['foodName']; ?></h3 >
+                                    <p><span class="foodCalories"> <?php echo $foods['foodWeight']; ?></span>
+                                    kcal</p>
                                 </div>
                             <?php endforeach; ?>
                         </div>

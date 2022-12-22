@@ -11,4 +11,3 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="https://unpkg.com/@popperjs/core@2" defer></script>
     <script src="assets/js/app.js" defer></script>
-</head>

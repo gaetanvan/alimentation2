@@ -10,9 +10,9 @@ class User
         $result = $db->prepare($sql);
         $result->execute();
         $data = $result->fetchAll();
-        if ($result->rowCount() > 0)
+        if($result-> rowCount() > 0)
         {
-            if (password_verify($password , $data[0]['password'])){
+            if (\password_verify($password , $data[0]['password'])){
                 $_SESSION['mail'] = $data[0]['mail'];
                 $_SESSION['password'] = $data[0]['password'];
                 $_SESSION['userID'] = $data[0]['userID'];
@@ -25,5 +25,18 @@ class User
         }
     }
 
-    public $isLogged = true;
+    static function getInfo($id){
+        $db = new PDO('mysql:host=localhost;dbname=alimentation', 'root', '');
+        $sqlUser = "SELECT * FROM user where userID = '$id'";
+        $resultUser = $db->prepare($sqlUser);
+        $resultUser->execute();
+        $dataUser = $resultUser->fetch();
+        return $dataUser;
+    }
+
+    static function createUser($name, $age, $size, $weight, $mail,$password,$imc){
+        $db = new PDO('mysql:host=localhost;dbname=alimentation', 'root', '');
+        $insertUser = $db->prepare('INSERT INTO user (name,age,size,weight, mail, password,imc) VALUES (? , ? , ?, ?, ?, ?, ?)');
+        $insertUser->execute(array($name, $age, $size, $weight, $mail,$password,$imc));
+    }
 }

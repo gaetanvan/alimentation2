@@ -13,10 +13,11 @@ Autoloader::register();
 if (isset($_POST['submit'])) {
     $mail = $_POST['mail'];
     $password = $_POST['password'];
-    user::login($mail, $password);
+    User::login($mail, $password);
 }
 include_once("includes/header.php");
 ?>
+</head>
 <header>
     <div class="container">
         <div class="row text-center">

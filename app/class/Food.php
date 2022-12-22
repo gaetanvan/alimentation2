@@ -1,11 +1,17 @@
 <?php
 
 namespace App;
-/**
- * Permet de recuperer la nourriture rentrer
- */
+use PDO;
 class Food
 {
+
+    static function getFood($id) {
+        $db = new PDO('mysql:host=localhost;dbname=alimentation', 'root', '');
+        $food = $db->prepare('SELECT * FROM food WHERE userID = ?');
+        $food->execute($id);
+        $foodInfo = $food->fetchAll();
+        return $foodInfo;
+    }
     /**
      * @var string[] tableau des nom de nourriture
      */

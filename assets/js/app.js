@@ -1,12 +1,12 @@
 console.log('bonjour a tous');
 
 const ctx = document.getElementById('myChart');
-new Chart(ctx, {
+var ChartUpdate = new Chart(ctx, {
     type: 'doughnut',
     data: {
         datasets: [{
-            label: 'My First Dataset',
-            data: [300, 50, 100],
+            label: 'kcal',
+                data: [],
             borderwidth: false,
             backgroundColor: [
                 'rgb(255, 99, 132)',
@@ -24,3 +24,19 @@ new Chart(ctx, {
             padding:20,
         }
 });
+
+//size
+var items = document.getElementsByClassName("foodCalories");
+var len = items.length;
+var kcal = document.getElementById('kcal')
+var calcCalories = 0
+
+// loop through all elements having class name ".my-class"
+
+for (var i = 0; i < len; i++) {
+    var item = items[i].innerHTML
+    ChartUpdate.data.datasets[0].data.push(item);
+    ChartUpdate.update();
+    calcCalories = parseInt(calcCalories) + parseInt(items[i].innerHTML);
+    kcal.innerHTML = calcCalories;
+}
