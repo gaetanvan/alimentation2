@@ -30,6 +30,25 @@ if (isset($_POST['enter'])) {
     VALUES (? , ? , ? , ?)', array($userIDFood, $foodName, $foodWeight, $foodDate));
     header('Location:index.php?id='.$userID);
 }
+//$formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::LONG,
+//    IntlDateFormatter::NONE);
+$date = '';
+$dayDate = strtotime($date);
+    var_dump(isset($_POST['more']) || isset($_POST['less']));
+if (isset($_POST['less'])) {
+    var_dump('non');
+    $dayDate = strtotime($dayDate. '-1 days');
+} elseif (isset($_POST['more'])){
+    var_dump('non non');
+    $dayDate = strtotime($dayDate. '+1 days');
+}elseif (!isset($_POST['more']) || !isset($_POST['less'])) {
+    var_dump('oui');
+    $date = date("l j F Y");
+    $dayDate = strtotime($date);
+};
+
+//$date = date("l j F Y");
+//$dayDate = strtotime($date.  "-1 days");
 
 //if (!$data['isLogged']){
 //    header('location: login.php');
@@ -70,9 +89,15 @@ include_once("includes/header.php");
                 </div>
             </section>
             <section class="date">
-                <div class="date text-center py-3"><?php $formatter = new IntlDateFormatter('fr_FR',
-                        IntlDateFormatter::FULL,
-                        IntlDateFormatter::NONE);echo $formatter->format(time()); ?></div>
+                <div class="date text-center py-3">
+                    <form method="post" action="">
+                        <button name="less" type="submit" class="btn btn-light"><</button>
+                        <?php
+                            echo date("l j F Y",$dayDate);
+                        ?>
+                        <button name="more" type="submit" class="btn btn-light">></button>
+                    </form>
+                </div>
             </section>
             <section class="list">
                 <div class="container">
